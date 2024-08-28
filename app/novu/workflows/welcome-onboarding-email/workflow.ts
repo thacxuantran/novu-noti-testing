@@ -15,10 +15,34 @@ export const welcomeOnboardingEmail = workflow(
       },
       {
         controlSchema: emailControlSchema,
-      },
+      }
     );
   },
   {
     payloadSchema,
+  }
+);
+
+export const inAppNotification = workflow(
+  "in-app-notification",
+  async ({ step, payload }) => {
+    await step.inApp("inbox", async () => {
+      return {
+        subject: "Welcome to Acme!",
+        body: "We are excited to have you on board.",
+        avatar: "https://acme.com/avatar.png",
+        primaryAction: {
+          label: "Get Started",
+          url: "https://acme.com/get-started",
+        },
+        secondaryAction: {
+          label: "Learn More",
+          url: "https://acme.com/learn-more",
+        },
+      };
+    });
   },
+  {
+    payloadSchema,
+  }
 );
